@@ -1,0 +1,6 @@
+how to use this code
+- Dependency:  akka-2.3.9 jar files
+- java 1.7
+- scala IDE or eclipse
+
+ 
