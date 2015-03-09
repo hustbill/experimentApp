@@ -3,4 +3,10 @@ how to use this code
 - java 1.7
 - scala IDE or eclipse
 
+## Resolved Issues ##
+
+
+ ## Closed Issues ##
  
+ ## Open Issues ##
+ - **[1]** Need a mediator to run the test cases and collect the data.

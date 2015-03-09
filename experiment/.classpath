@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="example"/>
 	<classpathentry kind="src" path="findPath"/>
 	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="src" path="remote"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="/Users/hua.zhang/Documents/akka/akka-2.3.9/lib/akka/akka-actor_2.10-2.3.9.jar"/>
 	<classpathentry kind="lib" path="/Users/hua.zhang/Documents/akka/akka-2.3.9/lib/akka/akka-kernel_2.10-2.3.9.jar"/>
@@ -14,5 +15,6 @@
 	<classpathentry kind="lib" path="/Users/hua.zhang/Documents/akka/akka-2.3.9/lib/akka/protobuf-java-2.5.0.jar"/>
 	<classpathentry kind="lib" path="/Users/hua.zhang/Documents/akka/akka-2.3.9/lib/scala-library-2.10.4.jar"/>
 	<classpathentry kind="lib" path="/Users/hua.zhang/Documents/akka/akka-2.3.9/lib/akka/akka-contrib_2.10-2.3.9.jar"/>
+	<classpathentry kind="lib" path="/Users/hua.zhang/Documents/akka/akka-2.3.9/lib/akka/akka-remote_2.10-2.3.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
