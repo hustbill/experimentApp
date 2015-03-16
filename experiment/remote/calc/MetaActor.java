@@ -19,7 +19,7 @@ public class MetaActor extends UntypedActor{
 	
 	@Override
 	public void preStart() {
-		log.info("MasterActor Starting");
+		log.info("MetaActor Starting");
 	}
 	
 //	ActorRef mapActor = getContext().actorOf( Props.create(MapActor.class).withRouter(

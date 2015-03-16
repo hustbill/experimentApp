@@ -1,6 +1,7 @@
 package actor;
 
 import java.util.*;
+
 import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.actor.UntypedActor;
@@ -9,7 +10,6 @@ import akka.event.LoggingAdapter;
 import messages.MapData;
 import messages.ReduceData;
 import messages.WordCount;
-
 import command.Command;
 import event.Event;
 
@@ -24,6 +24,11 @@ import event.Event;
 public class ReduceActor extends UntypedActor {
 	
 	LoggingAdapter log = Logging.getLogger(getContext().system(), this);
+	
+	@Override
+	public void preStart() {
+		log.info("ReduceActor Starting");
+	}
 
 	@Override
 	public void onReceive(Object msg) throws Exception {

@@ -39,13 +39,15 @@ import java.io.InputStreamReader;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import com.typesafe.config.ConfigFactory;
 
-public class WordCountApp {
+public class mainEntry {
 	
+	//public static final Logger log = LoggerFactory.getLogger(System.class);
+
 	public static void main(String[] args) throws Exception {
 		
 		String fileName = "Othello.txt";
@@ -53,10 +55,18 @@ public class WordCountApp {
 			System.out.println(args[0] + "");
 			fileName = args[0];
 		}
+		
+		// start caculator-lookup application 
+		startCalculatorLookupApp();
+		
 		// start wordcount application 
 		startWordCountApp(args[0]);
 		
-	
+		// start parent-child application 
+		//startParentChildApp();
+
+
+		
 	}
 
 	public static void startWordCountApp(String fileName)
@@ -113,5 +123,72 @@ public class WordCountApp {
 
 	}
 
+	public static void startParentChildApp() throws InterruptedException {
+		  final ActorSystem actorSystem = ActorSystem.create("actor-system");
 
+	        Thread.sleep(5000);
+
+	        final ActorRef actorRef = actorSystem.actorOf(Props.create(ParentActor.class), "parent-actor");
+
+	        actorRef.tell(new Command("CMD 1"), null);
+	        actorRef.tell(new Command("CMD 2"), null);
+	        actorRef.tell(new Command("CMD 3"), null);
+	        actorRef.tell("echo", null);
+	        actorRef.tell(new Command("CMD 4"), null);
+	        actorRef.tell(new Command("CMD 5"), null);
+
+	        Thread.sleep(5000);
+
+	        //log.debug("Actor System Shutdown Starting...");
+
+	        actorSystem.shutdown();
+	}
+	
+	public static void startCalculatorLookupApp(){
+		
+		// if (args.length == 0 || args[0].equals("Calculator"))
+		      startRemoteCalculatorSystem();
+		  //  if (args.length == 0 || args[0].equals("Lookup"))
+		      startRemoteLookupSystem();
+		
+	}
+	
+	
+
+	  public static void startRemoteCalculatorSystem() {
+	    final ActorSystem system = ActorSystem.create("CalculatorSystem",
+	        ConfigFactory.load(("calculator")));
+	    system.actorOf(Props.create(CalculatorActor.class), "calculator");
+	    System.out.println("Started CalculatorSystem");
+	  }
+
+	  public static void startRemoteLookupSystem() {
+
+	    final ActorSystem system = ActorSystem.create("LookupSystem",
+	        ConfigFactory.load("remotelookup"));
+	    final String path = "akka.tcp://CalculatorSystem@ecs301c-7.labs.encs:2852/user/calculator";
+	    final ActorRef actor = system.actorOf(
+	    		Props.create(LookupActor.class, path), "lookupActor");
+	    final ActorRef actor2 = system.actorOf(
+	            Props.create(LookupActor.class, path), "lookupActor2");
+
+	    
+	    System.out.println("Started LookupSystem");
+	    final Random r = new Random();
+	    system.scheduler().schedule(Duration.create(1, SECONDS),
+	        Duration.create(1, SECONDS), new Runnable() {
+	          @Override
+	          public void run() {
+	            if (r.nextInt(100) % 2 == 0) {
+	              actor.tell(new Op.Add(r.nextInt(100), r.nextInt(100)), null);
+	              actor2.tell(new Op.Add(r.nextInt(100), r.nextInt(100)), null);
+	            } else {
+	              actor.tell(new Op.Subtract(r.nextInt(100), r.nextInt(100)), null);
+	              actor2.tell(new Op.Subtract(r.nextInt(100), r.nextInt(100)), null);
+	            }
+
+	          }
+	        }, system.dispatcher());
+
+	  }
 }
