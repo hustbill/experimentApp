@@ -61,7 +61,7 @@ public class Main {
     ActorSystem system = ActorSystem.create("ClusterSystem", conf);
 
     startupSharedJournal(system, (port == 2551),
-        ActorPath$.MODULE$.fromString("akka.tcp://ClusterSystem@ecs301c-7.labs.encs:2551/user/store"));
+        ActorPath$.MODULE$.fromString("akka.tcp://ClusterSystem@172.16.32.128:2551/user/store"));
 
     system.actorOf(ClusterSingletonManager.defaultProps(Master.props(workTimeout), "active",
         PoisonPill.getInstance(), role), "master");
