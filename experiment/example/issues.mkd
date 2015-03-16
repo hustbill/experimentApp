@@ -1,0 +1,14 @@
+how to use this code
+- Dependency:  akka-2.3.9 jar files
+- java 1.7
+- scala IDE or eclipse
+
+## Resolved Issues ##
+
+
+ ## Closed Issues ##
+ 
+ ## Open Issues ##
+ - **[1]** Need a mediator to run the test cases and collect the data.
+ - **[2]** add remote communication between actors
+ - **[3]** Integrate the CSP jar with the experiments  

@@ -36,10 +36,10 @@ public class MapReduceApp {
 	public static void main(String... args) throws Exception {
 		long start;
 		 long end;
-		final Timeout timeout = new Timeout(Duration.create(50, TimeUnit.SECONDS));
+		final Timeout timeout = new Timeout(Duration.create(1, TimeUnit.SECONDS));
 		start = System.currentTimeMillis();
 		final ActorSystem actorSystem = ActorSystem.create("MapReduceApp");
-        Thread.sleep(5000);
+       // Thread.sleep(5000);
 		final ActorRef master = actorSystem.actorOf(
 				Props.create(MasterActor.class), "master");
 		/*
@@ -55,7 +55,7 @@ public class MapReduceApp {
 		final String fileName = "Othello.txt";
 	
 		fileReadActor.tell(fileName , master);
-		Thread.sleep(5000);
+		//Thread.sleep(5000);
 
 		Future<Object> future = Patterns.ask(master, new Result(), timeout);
 		String result = (String) Await.result(future, timeout.duration());

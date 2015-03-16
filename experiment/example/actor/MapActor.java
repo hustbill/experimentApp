@@ -1,5 +1,6 @@
 package actor;
 
+import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
@@ -23,12 +24,19 @@ import java.util.StringTokenizer;
 public class MapActor extends UntypedActor {
 	
 	LoggingAdapter log = Logging.getLogger(getContext().system(), this);
+	  //private final String path;
+	  private ActorRef metaActor = null;
 	
 	@Override
 	public void preStart() {
 		log.info("MapActor Starting");
 	}
 
+//	public MapActor(String path) {
+//		    this.path = path;
+//		   
+//		  }
+	  
 	@Override
 	public void onReceive(Object msg) throws Exception {
 		//log.info("Received Event: " + msg);
