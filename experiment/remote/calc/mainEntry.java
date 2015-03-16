@@ -57,7 +57,7 @@ public class mainEntry {
 		}
 		
 		// start caculator-lookup application 
-		startCalculatorLookupApp();
+		//startCalculatorLookupApp();
 		
 		// start wordcount application 
 		startWordCountApp(args[0]);
