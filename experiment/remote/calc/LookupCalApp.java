@@ -23,7 +23,8 @@ public class LookupCalApp {
   public static void startRemoteCalculatorSystem() {
     final ActorSystem system = ActorSystem.create("CalculatorSystem",
         ConfigFactory.load(("calculator")));
-    system.actorOf(Props.create(CalculatorActor.class), "calculator");
+    system.actorOf(Props.create(CalculatorActor.class), "calculator1");
+    system.actorOf(Props.create(CalculatorActor.class), "calculator2");
     System.out.println("Started CalculatorSystem");
   }
 
@@ -31,12 +32,14 @@ public class LookupCalApp {
 
     final ActorSystem system = ActorSystem.create("LookupSystem",
         ConfigFactory.load("remotelookup"));
-    final String path = "akka.tcp://CalculatorSystem@127.0.0.1:2752/user/calculator";
-    final ActorRef actor = system.actorOf(
-    		Props.create(LookupActor.class, path), "lookupActor");
-    final ActorRef actor2 = system.actorOf(
-            Props.create(LookupActor.class, path), "lookupActor2");
+    final String path1 = "akka.tcp://CalculatorSystem@ecs301c-7.labs.encs:2752/user/calculator1";
+    final String path2 = "akka.tcp://CalculatorSystem@ecs301c-7.labs.encs:2752/user/calculator2";
+    
+    final ActorRef actor1 = system.actorOf(
+    		Props.create(LookupActor.class, path1), "lookupActor1");
 
+    final ActorRef actor2 = system.actorOf(
+    		Props.create(LookupActor.class, path1), "lookupActor2");
     
     System.out.println("Started LookupSystem");
     final Random r = new Random();
@@ -45,11 +48,11 @@ public class LookupCalApp {
           @Override
           public void run() {
             if (r.nextInt(100) % 2 == 0) {
-              actor.tell(new Op.Add(r.nextInt(100), r.nextInt(100)), null);
+              actor1.tell(new Op.Add(r.nextInt(100), r.nextInt(100)), null);
               actor2.tell(new Op.Add(r.nextInt(100), r.nextInt(100)), null);
             } else {
-              actor.tell(new Op.Subtract(r.nextInt(100), r.nextInt(100)), null);
-              actor2.tell(new Op.Subtract(r.nextInt(100), r.nextInt(100)), null);
+              actor1.tell(new Op.Subtract(r.nextInt(100), r.nextInt(100)), null);
+             actor2.tell(new Op.Subtract(r.nextInt(100), r.nextInt(100)), null);
             }
 
           }
