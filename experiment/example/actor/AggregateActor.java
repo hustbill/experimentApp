@@ -24,7 +24,7 @@ public class AggregateActor extends UntypedActor {
 			aggregateInMemoryReduce(reduceData.getReduceDataList());
 		} else if (message instanceof Result) {
 			getSender().tell(finalReducedMap.toString(), getSelf());
-			  System.out.println(entriesSortedByValues(finalReducedMap));		
+			  //System.out.println(entriesSortedByValues(finalReducedMap));		
 		} else
 			unhandled(message);
 	}

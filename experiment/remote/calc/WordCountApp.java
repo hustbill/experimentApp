@@ -47,17 +47,7 @@ import com.typesafe.config.ConfigFactory;
 public class WordCountApp {
 	
 	public static void main(String[] args) throws Exception {
-		
-		String fileName = "Othello.txt";
-		
-		 if (args.length == 0 || args[0].equals("book8.txt")){
-     		startWordCountApp(args[0]); // // start wordcount application
-		}
-		if(args.length == 0 ||  args[0].equals("book7.txt")) {
-//		      startRemoteCalculatorSystem();
-//		      startRemoteLookupSystem();
-			startWordCountApp(args[0]); // // start wordcount application
-		}
+		startWordCountApp(args[0]);
 	}
 	
 	 public static void startRemoteCalculatorSystem() {
@@ -110,8 +100,11 @@ public class WordCountApp {
 		final Timeout timeout = new Timeout(Duration.create(50,
 				TimeUnit.SECONDS));
 
+//		final ActorSystem actorSystem = ActorSystem.create(
+//				"MapReduceAppSystem"+fileName.substring(4,5), ConfigFactory.load(("metaActor" + fileName.substring(4,5))));
+		
 		final ActorSystem actorSystem = ActorSystem.create(
-				"MapReduceAppSystem"+fileName.substring(4,5), ConfigFactory.load(("metaActor" + fileName.substring(4,5))));
+				"MapReduceAppSystem"+fileName.substring(4,5));
 
 		Thread.sleep(5000);
 		start = System.currentTimeMillis();
@@ -142,15 +135,15 @@ public class WordCountApp {
 		Future<Object> future = Patterns.ask(metaActor, new Result(), timeout);
 		String result = (String) Await.result(future, timeout.duration());
 
-		System.out.println(result);
+		//System.out.println(result);
 
 		end = System.currentTimeMillis();
 		Duration duration = Duration.create(end - start - 5000,
 				TimeUnit.MILLISECONDS);
 		System.out
-				.println(String
+				.println(fileName + " " +String
 						.format("\n\tClientActor estimate: \t\t\n\tCalculation time: \t"
-								+ duration));
+								+ duration ));
 //		if (result != null)
 //			actorSystem.shutdown();
 
